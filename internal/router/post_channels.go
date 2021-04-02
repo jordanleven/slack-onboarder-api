@@ -1,6 +1,7 @@
 package router
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -28,9 +29,9 @@ func joinChannels(c *gin.Context) {
 	err := client.JoinChannels(chIDs)
 
 	if err != nil {
-		c.JSON(300, "Error joining channels")
+		c.JSON(http.StatusInternalServerError, "Error joining channels")
 	} else {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"channels": chIDs,
 		})
 	}
