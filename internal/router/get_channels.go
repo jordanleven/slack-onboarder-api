@@ -1,6 +1,8 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jordanleven/slack-onboarder/internal/slackclient"
 )
@@ -11,9 +13,9 @@ func getChannels(c *gin.Context) {
 	channels, err := client.GetChannels()
 
 	if err != nil {
-		c.JSON(300, "Error retrieving channels")
+		c.JSON(http.StatusInternalServerError, "Error retrieving channels")
 	} else {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"channels": channels,
 		})
 	}
